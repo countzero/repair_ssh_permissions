@@ -54,6 +54,19 @@ function Disable-Inheritance([String] $item) {
     Set-Acl -Path $item -AclObject $acl
 }
 
+function Set-UserOwnership([String] $item) {
+
+    Write-Host "Let '$user' own '${item}'..." -ForegroundColor "DarkYellow"
+
+    $acl = Get-Acl -Path $item
+
+    $userAccount = New-Object System.Security.Principal.NTAccount($user)
+
+    $acl.SetOwner($userAccount)
+
+    Set-Acl -Path $item -AclObject $acl
+}
+
 function Remove-AllAccessPermissions([String] $item) {
 
     Write-Host "Removing all access permissions on '${item}'..." -ForegroundColor "DarkYellow"
@@ -84,7 +97,6 @@ function Grant-UserFullControl([String] $item) {
     Set-Acl -Path $item -AclObject $acl
 }
 
-
 Write-Host "Fixing directory and file permissions of '${path}'..." -ForegroundColor "Yellow"
 
 # We are repairing the .ssh directory and everything within it.
@@ -93,6 +105,7 @@ $items = @($path) + @($(Get-ChildItem -Path $path -Force -Recurse).FullName)
 foreach ($item in $items) {
 
     Disable-Inheritance -item $item
+    Set-UserOwnership -item $item
     Remove-AllAccessPermissions -item $item
     Grant-UserFullControl -item $item
 }
