@@ -4,7 +4,7 @@ The best practice configuration for the personal .ssh directory is to restrict a
 This PowerShell script automatically repairs the permissions of the .ssh directory and files. It does the following for all items within and including the given .ssh directory:
 
 * Disables inheritance
-* Sets owenership to one user
+* Sets ownership to one user
 * Removes all permissions
 * Grants one user full control
 
