@@ -22,7 +22,7 @@ Execute the following command with administrator privileges to repair the '%USER
 ```
 
 ### Repair a specific .ssh directory for a specific user
-Execute the following command with administrator privileges to repair the '%USERPROFILE%/.ssh' directory (and all items within) for the current Windows user.
+Execute the following command with administrator privileges to repair a specific directory for a specific local Windows user.
 ```PowerShell
 .\repair_ssh_permissions.ps1 -path "X:\unsual\path\to\.ssh" -user "John Doe"
 ```
