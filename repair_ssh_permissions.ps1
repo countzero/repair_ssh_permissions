@@ -34,6 +34,9 @@ Param (
     $user
 )
 
+# We are breaking on the first exception.
+Set-StrictMode -Version latest
+$ErrorActionPreference = "Stop"
 
 # Default the target path to '%USERPROFILE%/.ssh'.
 if (!$path) {
@@ -97,15 +100,50 @@ function Grant-UserFullControl([String] $item) {
     Set-Acl -Path $item -AclObject $acl
 }
 
-Write-Host "Fixing directory and file permissions of '${path}'..." -ForegroundColor "Yellow"
+function Repair-Item([String] $item) {
 
-# We are repairing the .ssh directory and everything within it.
-$items = @($path) + @($(Get-ChildItem -Path $path -Force -Recurse).FullName)
-
-foreach ($item in $items) {
+    Write-Host "Repairing SSH item '$item'..." -ForegroundColor "White"
 
     Disable-Inheritance -item $item
     Set-UserOwnership -item $item
     Remove-AllAccessPermissions -item $item
     Grant-UserFullControl -item $item
 }
+
+function Repair-DirectoryAndFiles([String] $directoryPath) {
+
+    Repair-Item -item $directoryPath
+
+    $directoryIsEmpty = $($(Get-ChildItem $directoryPath) | Measure-Object ).Count -eq 0
+
+    if ($directoryIsEmpty) {
+        return;
+    }
+
+    $files = @($(Get-ChildItem -File -Path $directoryPath -Force).FullName)
+    foreach ($file in $files) {
+        Repair-Item -item $file
+    }
+
+    $directories = @($(Get-ChildItem -Directory -Path $directoryPath -Force))
+    foreach ($directory in $directories) {
+        Repair-DirectoryAndFiles($directory.FullName)
+    }
+}
+
+Write-Host "Repairing SSH directory and file permissions..." -ForegroundColor "Green"
+
+# We have to repair the .ssh directory first to gain read permissions.
+Repair-Item -item $path
+
+# If the entry point directory is a symbolic link we
+# are also repairing its target and proceed from there.
+if ($(Get-Item $path).LinkType -eq 'SymbolicLink') {
+    $path = $(Get-Item $path).Target
+    Repair-Item -item $path
+}
+
+# We are recursively reparining all directories and files.
+Repair-DirectoryAndFiles($path)
+
+Write-Host "Successfully repaired SSH directory and file permissions." -ForegroundColor "Green"
