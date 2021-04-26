@@ -143,7 +143,7 @@ if ($(Get-Item $path).LinkType -eq 'SymbolicLink') {
     Repair-Item -item $path
 }
 
-# We are recursively reparining all directories and files.
+# We are recursively repairing all directories and files.
 Repair-DirectoryAndFiles($path)
 
 Write-Host "Successfully repaired SSH directory and file permissions." -ForegroundColor "Green"
