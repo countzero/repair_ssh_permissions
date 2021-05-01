@@ -18,18 +18,23 @@ Open a PowerShell console at the location of the unpacked release and execute th
 
 ### Repair the current users default .ssh directory
 Execute the following command with administrator privileges to repair the '%USERPROFILE%/.ssh' directory (and all items within) for the current Windows user.
+
 ```PowerShell
 .\repair_ssh_permissions.ps1
 ```
 
+**Hint:** If you are running into an `SeSecurityPrivilege` Errors execute the command with administrator privileges.
+
 ### Repair a specific .ssh directory for a specific user
 Execute the following command with administrator privileges to repair a specific directory for a specific local Windows user.
+
 ```PowerShell
 .\repair_ssh_permissions.ps1 -path "X:\unsual\path\to\.ssh" -user "John Doe"
 ```
 
 ### Get detailed help
 Execute the following command to get detailed help.
+
 ```PowerShell
 Get-Help .\repair_ssh_permissions.ps1 -detailed
 ```
