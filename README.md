@@ -14,6 +14,8 @@ Download and unpack the [latest release](https://github.com/countzero/repair_ssh
 ## Usage
 Open a PowerShell console at the location of the unpacked release and execute the [./repair_ssh_permissions.ps1](https://github.com/countzero/repair_ssh_permissions/blob/main/repair_ssh_permissions.ps1).
 
+**Hint:** If you are running into an `SeSecurityPrivilege` Errors execute the command with administrator privileges.
+
 ## Examples
 
 ### Repair the current users default .ssh directory
@@ -22,8 +24,6 @@ Execute the following command with administrator privileges to repair the '%USER
 ```PowerShell
 .\repair_ssh_permissions.ps1
 ```
-
-**Hint:** If you are running into an `SeSecurityPrivilege` Errors execute the command with administrator privileges.
 
 ### Repair a specific .ssh directory for a specific user
 Execute the following command with administrator privileges to repair a specific directory for a specific local Windows user.
