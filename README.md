@@ -14,7 +14,7 @@ Download and unpack the [latest release](https://github.com/countzero/repair_ssh
 ## Usage
 Open a PowerShell console at the location of the unpacked release and execute the [./repair_ssh_permissions.ps1](https://github.com/countzero/repair_ssh_permissions/blob/main/repair_ssh_permissions.ps1).
 
-**Hint:** If you are running into an `SeSecurityPrivilege` Error execute the command with administrator privileges.
+**Hint:** If you are running into an `SeSecurityPrivilege` error execute the command with administrator privileges.
 
 ## Examples
 
