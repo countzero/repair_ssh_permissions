@@ -1,7 +1,7 @@
 # Repair the permissions of the .ssh directory and files
 The best practice configuration for the personal .ssh directory is to restrict all access to the corresponding local user. This will be enforced by OpenSSH and any misconfiguration will result in OpenSSH ignoring the .ssh directory contents with a warning.
 
-This PowerShell script automatically repairs the permissions of the .ssh directory and files. It does the following for all items within and including the given .ssh directory:
+This PowerShell script automatically repairs the permissions of the `.ssh` directory and files. It does the following for all items within and including the given `.ssh` directory:
 
 * Disables inheritance
 * Sets ownership to one user
