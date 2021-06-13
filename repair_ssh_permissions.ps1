@@ -114,19 +114,21 @@ function Repair-DirectoryAndFiles([String] $directoryPath) {
 
     Repair-Item -item $directoryPath
 
-    $directoryIsEmpty = $($(Get-ChildItem $directoryPath) | Measure-Object ).Count -eq 0
+    $directoryIsEmpty = $($(Get-ChildItem $directoryPath) | Measure-Object).Count -eq 0
 
     if ($directoryIsEmpty) {
         return;
     }
 
-    $files = @($(Get-ChildItem -File -Path $directoryPath -Force).FullName)
+    $files = @($(Get-ChildItem -File -Path $directoryPath -Force))
     foreach ($file in $files) {
-        Repair-Item -item $file
+
+        Repair-Item -item $file.FullName
     }
 
     $directories = @($(Get-ChildItem -Directory -Path $directoryPath -Force))
     foreach ($directory in $directories) {
+
         Repair-DirectoryAndFiles($directory.FullName)
     }
 }
