@@ -38,6 +38,15 @@ Param (
 Set-StrictMode -Version latest
 $ErrorActionPreference = "Stop"
 
+# We are self elevating this script if it is not executed with administrator privileges.
+$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+if (!($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
+    Start-Process PowerShell `
+        -Verb RunAs `
+        -ArgumentList "-NoExit -NoProfile -ExecutionPolicy Bypass -Command `"cd '${pwd}'; & '${PSCommandPath}';`""
+    exit
+}
+
 # Default the target path to '%USERPROFILE%/.ssh'.
 if (!$path) {
     $path = $(Join-Path -Path "$env:USERPROFILE" -ChildPath ".ssh")

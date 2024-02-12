@@ -19,14 +19,17 @@ Open a PowerShell console at the location of the unpacked release and execute th
 ## Examples
 
 ### Repair the current users default .ssh directory
-Execute the following command with administrator privileges to repair the '%USERPROFILE%/.ssh' directory (and all items within) for the current Windows user.
+Execute the following command to repair the '%USERPROFILE%/.ssh' directory (and all items within) for the current Windows user.
 
 ```PowerShell
 .\repair_ssh_permissions.ps1
 ```
 
+> [!NOTE]
+> The script will automatically elevate itself to administrator privileges.
+
 ### Repair a specific .ssh directory for a specific user
-Execute the following command with administrator privileges to repair a specific directory for a specific local Windows user.
+Execute the following command with to repair a specific directory for a specific local Windows user.
 
 ```PowerShell
 .\repair_ssh_permissions.ps1 -path "X:\unsual\path\to\.ssh" -user "John Doe"
